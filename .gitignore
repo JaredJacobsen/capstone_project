@@ -1,1 +1,3 @@
+analysis/uniprot_sprot.fasta
+*.pyc
 node_modules/*
