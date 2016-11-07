@@ -20,7 +20,7 @@ class ProteinsForm extends Component {
           <ControlLabel>Textarea</ControlLabel>
           <FormControl componentClass="textarea" placeholder="textarea" onChange={this.onChange.bind(this)}/>
         </FormGroup>
-        <Button type="submit" onClick={() => this.props.onSubmitHandler(this.text_input)}>
+        <Button type="submit" onClick={() => this.props.submitANums(this.text_input)}>
           Submit
         </Button>
       </form>

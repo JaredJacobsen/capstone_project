@@ -3,7 +3,9 @@ import React, { Component } from 'react'
 class Predictions extends Component {
 
   render() {
-    return <h1>predictions</h1>
+    return <h1>{this.props.predictions}</h1>
   }
 
 }
+
+export default Predictions
