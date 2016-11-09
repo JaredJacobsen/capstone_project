@@ -63,4 +63,4 @@ def convert_acc_nums_to_X(a_nums_str):
     sequences = get_sequences_from_uniprot(a_nums)
     X = pd.DataFrame({'sequence': sequences})
     X = add_protein_characteristics(X)
-    return X
+    return X.drop('sequence', axis=1)

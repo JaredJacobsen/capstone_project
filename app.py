@@ -18,7 +18,8 @@ def predict_allergens():
     data = json.loads(request.data)
     X = convert_acc_nums_to_X(data['text_input'])
     predictions = allergen_model.predict(X)
-    return json.dumps({'predictions': predictions})
+    print predictions.tolist()
+    return json.dumps({'predictions': predictions.tolist()})
 
 ##dont forget to add database
 

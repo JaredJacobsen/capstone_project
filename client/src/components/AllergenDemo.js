@@ -16,10 +16,11 @@ class AllergenDemo extends Component {
         text_input: text_input
       })
       .then((response) => {
-        this.predictions = response.predictions
+        this.predictions = response.data.predictions
+        console.log('predictions', this.predictions)
       })
       .catch((error) => {
-        console.log(error)
+        console.log('error ', error)
       })
     }
   }
