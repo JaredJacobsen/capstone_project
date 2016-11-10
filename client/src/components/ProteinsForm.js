@@ -6,23 +6,23 @@ class ProteinsForm extends Component {
 
   constructor(props) {
     super(props)
-    this.text_input = ''
+    this.state = {
+      text_input: ''
+    }
   }
 
   onChange(e) {
-    this.text_input = e.target.value
+    this.state.text_input = e.target.value
   }
 
   render() {
     return (
       <form>
         <FormGroup controlId="formControlsTextarea">
-          <ControlLabel>Textarea</ControlLabel>
-          <FormControl componentClass="textarea" placeholder="textarea" onChange={this.onChange.bind(this)}/>
+          <ControlLabel>Input protein accession numbers</ControlLabel>
+          <FormControl componentClass="textarea" placeholder="e.g., P31946 P62258 ..." onChange={this.onChange.bind(this)}/>
         </FormGroup>
-        <Button type="button" onClick={() => {this.props.submitANums(this.text_input)}}>
-          Submit
-        </Button>
+        <Button type="button" onClick={() => {this.props.submitANums(this.state.text_input)}}>Predict</Button>
       </form>
     )
   }

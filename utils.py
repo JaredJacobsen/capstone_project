@@ -3,6 +3,7 @@ import numpy as np
 import math
 import re
 import requests
+import StringIO
 
 from Bio import SeqIO
 from Bio.SeqUtils.ProtParam import ProteinAnalysis
@@ -11,12 +12,18 @@ def get_sequences_from_fasta(fin):
     fasta_sequences = SeqIO.parse(fin,'fasta')
     return [str(fasta.seq) for fasta in fasta_sequences]
 
+#Accepts fasta header and returns (db, unique_identifier, entry_name, protein_name, organism_name)
+def parse_description(d):
+    p = '(\w{2})\s*\|\s*([\w\d]+)\s*\|\s*(.*?)\s(.*?)\sOS=([\w]* [\w]*)'
+    group_object = re.match(p, d)
+    return group_object.group(1, 2, 3, 4, 5)
+
 def extract_accession_nums(s):
     pattern = '[\w\d]{6}'
     accession_nums = re.findall(pattern, s)
     return accession_nums
 
-def get_sequences_from_uniprot(accession_nums):
+def get_fasta_from_uniprot(accession_nums):
     url = 'http://www.uniprot.org/uploadlists/'
     params = {
     'from':'ACC',
@@ -25,8 +32,12 @@ def get_sequences_from_uniprot(accession_nums):
     'query': ' '.join(map(str, accession_nums)),
     }
     response = requests.get(url, params)
-    sequences = [''.join(i.split('\n')[1:]) for i in response.text.split('>')[1:]]
-    return sequences
+    return response.text
+
+def parse_fasta_str(fasta_str):
+    fin = StringIO.StringIO(fasta_str)
+    fasta_sequences = SeqIO.parse(fin,'fasta')
+    return [list(parse_description(f.description)) + [str(f.seq)] for f in fasta_sequences]
 
 #assumes pos_sequences outnumbers neg_sequences
 def create_balanced_df(pos_sequences, neg_sequences, target_column_name):
@@ -37,8 +48,9 @@ def create_balanced_df(pos_sequences, neg_sequences, target_column_name):
                                 target_column_name: [1]*len(pos_sequences) + [0]*len(neg_sequences)})
     return balanced_df
 
-#accepts pandas df with sequence column
+#accepts pandas df with sequence column. non_mutative df
 def add_protein_characteristics(df):
+    df = df.copy()
     aa_list = ['A', 'C','E','D','G','F','I','H','K','M','L','N','Q','P','S','R','T','W','V','Y']
     aa_dict = {}
     for aa in aa_list:
@@ -58,9 +70,9 @@ def add_protein_characteristics(df):
         df[k] = v
     return df
 
-def convert_acc_nums_to_X(a_nums_str):
+def convert_acc_nums_to_df(a_nums_str):
     a_nums = extract_accession_nums(a_nums_str)
-    sequences = get_sequences_from_uniprot(a_nums)
-    X = pd.DataFrame({'sequence': sequences})
-    X = add_protein_characteristics(X)
-    return X.drop('sequence', axis=1)
+    fasta = get_fasta_from_uniprot(a_nums)
+    parsed_fasta = parse_fasta_str(fasta)
+    df = pd.DataFrame(data=parsed_fasta, columns=['db', 'identifier', 'entry_name', 'protein_name', 'organism_name', 'sequence'])
+    return df

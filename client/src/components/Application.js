@@ -1,16 +1,13 @@
 import React, { Component } from 'react'
 import AllergenDemo from './AllergenDemo'
+import NavBar from './NavBar'
 
 class Application extends Component {
-
-  constructor(props) {
-    super(props)
-  }
 
   render() {
     return (
       <div>
-        <h1>Protein Prediction Application</h1>
+        <NavBar/>
         <AllergenDemo />
       </div>
     )

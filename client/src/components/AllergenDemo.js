@@ -3,11 +3,19 @@ import axios from 'axios'
 import ProteinsForm from './ProteinsForm'
 import Predictions from './Predictions'
 
+// should by modified to allow input of true class labels, to calculate accuracy
+
 class AllergenDemo extends Component {
 
   constructor(props) {
     super(props)
-    this.predictions = []
+    this.state = {
+      predictions: false
+    }
+  }
+
+  newPredictionHandler() {
+    this.setState({predictions: false})
   }
 
   submitANums(text_input) {
@@ -16,8 +24,7 @@ class AllergenDemo extends Component {
         text_input: text_input
       })
       .then((response) => {
-        this.predictions = response.data.predictions
-        console.log('predictions', this.predictions)
+        this.setState({predictions: response.data})
       })
       .catch((error) => {
         console.log('error ', error)
@@ -26,10 +33,14 @@ class AllergenDemo extends Component {
   }
 
   render() {
+    console.log('render')
     return (
       <div>
-        <h1>Allergen Demo</h1>
-        <ProteinsForm submitANums={this.submitANums.bind(this)} />
+        <h1>Allergenicity Predictor</h1>
+        {!this.state.predictions
+          ? <ProteinsForm submitANums={this.submitANums.bind(this)} />
+          : <Predictions predictions={this.state.predictions}
+                         newPredictionHandler={this.newPredictionHandler.bind(this)} />}
       </div>
     )
   }
