@@ -12,11 +12,18 @@ def get_sequences_from_fasta(fin):
     fasta_sequences = SeqIO.parse(fin,'fasta')
     return [str(fasta.seq) for fasta in fasta_sequences]
 
-#Accepts fasta header and returns (db, unique_identifier, entry_name, protein_name, organism_name)
+#Accepts fasta header and returns (db, unique_identifier, entry_name, protein_name, organism_name, gene_name)
 def parse_description(d):
-    p = '(\w{2})\s*\|\s*([\w\d]+)\s*\|\s*(.*?)\s(.*?)\sOS=([\w]* [\w]*)'
-    group_object = re.match(p, d)
-    return group_object.group(1, 2, 3, 4, 5)
+    organism_name = re.search('OS=(.*?)\s*(?:GN=|PE=)', d).group(1)
+    gene_name = re.search('GN=(.*?)\s*PE=', d)
+    if gene_name: gene_name = gene_name.group(1)
+    db, unique_identifier, entry_name, protein_name = re.search('.*?(\w{2})\|([\w\d]+)\|(.*?)\s(.*?)\sOS=', d).group(1,2,3,4)
+    return (db, unique_identifier, entry_name, protein_name, organism_name, gene_name)
+
+#returns (db, unique_identifier)
+def parse_allerhunt_description(d):
+    print d
+    return re.search('(\w{2})\|([\w\d]+)\|', d).group(1,2)
 
 def extract_accession_nums(s):
     pattern = '[\w\d]{6}'
@@ -34,10 +41,10 @@ def get_fasta_from_uniprot(accession_nums):
     response = requests.get(url, params)
     return response.text
 
-def parse_fasta_str(fasta_str):
+def parse_fasta_str(fasta_str, parse_description_func):
     fin = StringIO.StringIO(fasta_str)
     fasta_sequences = SeqIO.parse(fin,'fasta')
-    return [list(parse_description(f.description)) + [str(f.seq)] for f in fasta_sequences]
+    return [list(parse_description_func(f.description)) + [str(f.seq)] for f in fasta_sequences]
 
 #assumes pos_sequences outnumbers neg_sequences
 def create_balanced_df(pos_sequences, neg_sequences, target_column_name):
@@ -73,6 +80,6 @@ def add_protein_characteristics(df):
 def convert_acc_nums_to_df(a_nums_str):
     a_nums = extract_accession_nums(a_nums_str)
     fasta = get_fasta_from_uniprot(a_nums)
-    parsed_fasta = parse_fasta_str(fasta)
+    parsed_fasta = parse_fasta_str(fasta, parse_description)
     df = pd.DataFrame(data=parsed_fasta, columns=['db', 'identifier', 'entry_name', 'protein_name', 'organism_name', 'sequence'])
     return df

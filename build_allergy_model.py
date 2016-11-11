@@ -6,8 +6,8 @@ from sklearn.model_selection import cross_val_score
 import cPickle as pickle
 
 def build_model():
-    allergen_sequences = get_sequences_from_fasta(open('allergen_demo/uniprot_allergens.fasta'))
-    non_allergen_sequences = get_sequences_from_fasta(open('allergen_demo/uniprot_sprot.fasta'))
+    allergen_sequences = get_sequences_from_fasta(open('data/uniprot_allergens.fasta'))
+    non_allergen_sequences = get_sequences_from_fasta(open('data/uniprot_sprot.fasta'))
 
     df = create_balanced_df(allergen_sequences, non_allergen_sequences, 'allergen')
     df = add_protein_characteristics(df)
