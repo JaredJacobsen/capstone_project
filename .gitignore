@@ -1,4 +1,5 @@
 data/uniprot_sprot.fasta
 data/uniprot_sprot.xml
+data/Rocchio_human_MF_names.txt
 *.pyc
 node_modules/*

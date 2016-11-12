@@ -1,0 +1,7 @@
+For the NETL algorithm you will need to download an LDA package. The matlab code provided has been designed to work with the package written by Daichi Mochihashi, available at:
+http://chasen.org/~daiti-m/dist/lda/
+
+The files you will need to make sure are in this directory are:
+accum_beta.massert.mconverged.mdiff_vec.mfeatures.mfmatrix.misint.mldamain.mmnormalize.mnewton_alpha.mnormalize.mrtime.mvbem.m
+
+In addition, you will also need to train your LDA topic model with an LDA package to obtain the *.alpha and *.beta parameter files. See the main ReadMe for more details.
