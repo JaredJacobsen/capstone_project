@@ -46,7 +46,7 @@ def parse_fasta_str(fasta_str, parse_description_func):
     fasta_sequences = SeqIO.parse(fin,'fasta')
     return [list(parse_description_func(f.description)) + [str(f.seq)] for f in fasta_sequences]
 
-#assumes pos_sequences outnumbers neg_sequences
+#assumes neg_sequences outnumbers pos_sequences
 def create_balanced_df(pos_sequences, neg_sequences, target_column_name):
     pos_set = set(pos_sequences)
     neg_sequences = [seq for seq in neg_sequences if seq not in pos_set]
