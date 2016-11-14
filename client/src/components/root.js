@@ -1,10 +1,16 @@
 import React, { Component } from 'react'
-import Application from './Application'
+import NavBar from './NavBar'
 
-export default class Root extends Component {
+class Root extends Component {
+
   render() {
     return (
-      <Application />
+      <div>
+        <NavBar/>
+        {this.props.children}
+      </div>
     )
   }
 }
+
+export default Root;

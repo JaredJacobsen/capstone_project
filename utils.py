@@ -81,5 +81,16 @@ def convert_acc_nums_to_df(a_nums_str):
     a_nums = extract_accession_nums(a_nums_str)
     fasta = get_fasta_from_uniprot(a_nums)
     parsed_fasta = parse_fasta_str(fasta, parse_description)
-    df = pd.DataFrame(data=parsed_fasta, columns=['db', 'identifier', 'entry_name', 'protein_name', 'organism_name', 'sequence'])
+    df = pd.DataFrame(data=parsed_fasta, columns=['db', 'identifier', 'entry_name', 'protein_name', 'organism_name', 'gene_name', 'sequence'])
+    return df
+
+def protein_input_to_pred_df(text, model):
+    if len(text.split()[0]) > 7:
+        df = pd.DataFrame(data=entries, columns=['sequence'])
+        X = add_protein_characteristics(df)
+    else:
+        df = convert_acc_nums_to_df(text)
+        X = add_protein_characteristics(df['sequence'].to_frame())
+    X = X.drop(['sequence'], axis=1)
+    df['prediction'] = model.predict(X)
     return df

@@ -17,7 +17,7 @@ def build_model():
     rf = RandomForestClassifier()
     print 'cross validation score: ' + str(np.mean(cross_val_score(rf, X, y, cv=5))) + '\n'
     rf.fit(X, y)
-    with open('allergen_demo/allergen_model.pkl', 'w') as fout:
+    with open('pickles/allergen_model.pkl', 'w') as fout:
         pickle.dump(rf, fout)
     return rf
 
