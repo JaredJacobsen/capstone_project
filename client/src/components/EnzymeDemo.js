@@ -16,7 +16,7 @@ class EnzymeDemo extends Component {
     this.setState({predictions: false})
   }
 
-  submitANums(text_input) {
+  onSubmitANums(text_input) {
     if (this.text_input != '') {
       axios.post('http://127.0.0.1:5000/predict-Enzymes', {
         text_input: text_input
@@ -36,8 +36,9 @@ class EnzymeDemo extends Component {
       <div>
         <h1>Enzyme Predictor</h1>
         {!this.state.predictions
-          ? <ProteinsForm submitANums={this.submitANums.bind(this)} />
+          ? <ProteinsForm onSubmitANums={this.onSubmitANums.bind(this)} />
           : <Predictions predictions={this.state.predictions}
+                         targetVariableName='Enzyme'
                          newPredictionHandler={this.newPredictionHandler.bind(this)} />}
       </div>
     )

@@ -4,9 +4,22 @@ import math
 import re
 import requests
 import StringIO
-
+import cPickle as pickle
+import xml.etree.ElementTree as ET
+import itertools
+import sys
+from collections import defaultdict
+from sklearn.ensemble import RandomForestClassifier
 from Bio import SeqIO
 from Bio.SeqUtils.ProtParam import ProteinAnalysis
+
+if __name__ != '__main__':
+    with open('pickles/go_dict.pkl', 'r') as fin:
+        go_dict = pickle.load(fin)
+    with open('pickles/protein_dict.pkl', 'r') as fin:
+        protein_dict = pickle.load(fin)
+    with open('pickles/gene_dict.pkl', 'r') as fin:
+        gene_dict = pickle.load(fin)
 
 def get_sequences_from_fasta(fin):
     fasta_sequences = SeqIO.parse(fin,'fasta')
@@ -89,8 +102,54 @@ def protein_input_to_pred_df(text, model):
         df = pd.DataFrame(data=entries, columns=['sequence'])
         X = add_protein_characteristics(df)
     else:
-        df = convert_acc_nums_to_df(text)
+        df = a_nums_to_df(text)
         X = add_protein_characteristics(df['sequence'].to_frame())
     X = X.drop(['sequence'], axis=1)
     df['prediction'] = model.predict(X)
     return df
+
+def a_nums_to_df(a_nums_str, columns=None):
+    a_nums = extract_accession_nums(a_nums_str)
+    proteins = [protein_dict[a] for a in a_nums]
+    if columns is None: columns = proteins[0].keys()
+    columns_data = []
+    for c in columns:
+        columns_data.append([p[c] for p in proteins])
+    df = pd.DataFrame(data=dict(zip(columns, columns_data)))
+    return df
+
+def build_GO_model(go_id):
+    if go_id not in go_dict:
+        print 'go id not in go_dict'
+        return None
+    pos_sequences = [protein_dict[a_num]['sequence'] for a_num in go_dict[go_id]]
+    pos_sequences = list(set(pos_sequences))
+    if len(pos_sequences) < 50:
+        print 'len(pos_sequences) < 50'
+        return None
+
+    neg_go_genes = None
+    with open('data/Rocchio_human_MF_names.txt', 'r') as fin:
+        for l in fin:
+            if l[3:10] == go_id:
+                neg_go_genes = [g for g in l.split()[1:] if g != 'NONE']
+                if len(neg_go_genes) > 0 and len(pos_sequences) < len(neg_go_genes):
+                    break
+                print 'not enough neg go genes'
+                return None
+    if neg_go_genes is None:
+        print 'no neg genes found'
+        return None
+    neg_sequences = [[protein_dict[a_num]['sequence'] for a_num in gene_dict[(g, '9606')]] for g in neg_go_genes]
+    neg_sequences = [s for lst in neg_sequences for s in lst]
+    neg_sequences = list(set(neg_sequences))
+    print 'neg_sequences before: ', len(neg_sequences)
+    print 'pos_sequences before: ', len(pos_sequences)
+    df = create_balanced_df(pos_sequences, neg_sequences, 'go')
+    df = add_protein_characteristics(df)
+
+    X = df.drop(['sequence','go'], axis=1)
+    y = df['go']
+    rf = RandomForestClassifier()
+    rf.fit(X, y)
+    return rf

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { FormGroup, ControlLabel, FormControl, FieldGroup, Button} from 'react-bootstrap'
 import axios from 'axios'
 
-class ProteinsForm extends Component {
+class GOForm extends Component {
 
   constructor(props) {
     super(props)
@@ -19,13 +19,13 @@ class ProteinsForm extends Component {
     return (
       <form onSubmit={(e) => {e.preventDefault()}}>
         <FormGroup controlId="formControlsTextarea">
-          <ControlLabel>Input protein accession numbers</ControlLabel>
-          <FormControl componentClass="textarea" placeholder="e.g., P31946 P62258 ..." onChange={this.onChange.bind(this)}/>
+          <ControlLabel>Input Gene Ontology ID</ControlLabel>
+          <FormControl type="text" placeholder="e.g., 0004738" onChange={this.onChange.bind(this)}/>
         </FormGroup>
-        <Button type="button" onClick={() => {this.props.onSubmitANums(this.state.text_input)}}>Predict</Button>
+        <Button type="button" onClick={() => {this.props.onSubmitGONum(this.state.text_input)}}>Build Model</Button>
       </form>
     )
   }
 }
 
-export default ProteinsForm
+export default GOForm

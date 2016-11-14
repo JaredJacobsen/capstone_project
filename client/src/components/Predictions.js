@@ -13,14 +13,14 @@ class Predictions extends Component {
               <th>Accession #</th>
               <th>Protein Name</th>
               <th>Organism Name</th>
-              <th>Allergen</th>
+              <th>{this.props.targetVariableName}</th>
             </tr>
           </thead>
           <tbody>
             {Object.values(this.props.predictions).map((p, index) => {
               return (
                 <tr key={index}>
-                  <td>{p.identifier}</td>
+                  <td>{p.acc_num}</td>
                   <td>{p.protein_name}</td>
                   <td>{p.organism_name}</td>
                   <td>{p.prediction}</td>

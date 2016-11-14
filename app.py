@@ -1,7 +1,6 @@
 from flask import Flask, request, send_from_directory
 from flask_cors import CORS, cross_origin
-from utils import protein_input_to_pred_df
-from gene_ontology import build_GO_model
+from utils import protein_input_to_pred_df, build_GO_model
 import cPickle as pickle
 import json
 
@@ -23,7 +22,10 @@ def predict_allergens():
 def set_GO_model():
     data = json.loads(request.data)
     go_id = data['go_id']
+    global GO_model
     GO_model = build_GO_model(go_id)
+    response = {'success': True if GO_model is not None else False}
+    return json.dumps(response)
 
 @app.route('/predict-GO', methods=['POST'])
 def predict_gene_ontology():
