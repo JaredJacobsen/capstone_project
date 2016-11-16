@@ -38,6 +38,12 @@ def parse_allerhunt_description(d):
     print d
     return re.search('(\w{2})\|([\w\d]+)\|', d).group(1,2)
 
+#Accepts fasta string and returns (db, unique_identifier, entry_name, protein_name, organism_name, gene_name, seqeunce)
+def parse_fasta_str(fasta_str, parse_description_func=parse_description):
+    fin = StringIO.StringIO(fasta_str)
+    fasta_sequences = SeqIO.parse(fin,'fasta')
+    return [list(parse_description_func(f.description)) + [str(f.seq)] for f in fasta_sequences]
+
 def extract_accession_nums(s):
     pattern = '[\w\d]{6}'
     accession_nums = re.findall(pattern, s)
@@ -53,11 +59,6 @@ def get_fasta_from_uniprot(accession_nums):
     }
     response = requests.get(url, params)
     return response.text
-
-def parse_fasta_str(fasta_str, parse_description_func):
-    fin = StringIO.StringIO(fasta_str)
-    fasta_sequences = SeqIO.parse(fin,'fasta')
-    return [list(parse_description_func(f.description)) + [str(f.seq)] for f in fasta_sequences]
 
 #assumes neg_sequences outnumbers pos_sequences
 def create_balanced_df(pos_sequences, neg_sequences, target_column_name):
