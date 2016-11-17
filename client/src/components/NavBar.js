@@ -3,11 +3,17 @@ import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
 import { Link } from 'react-router'
 import { LinkContainer } from 'react-router-bootstrap'
 
+
+const style = {
+  width: '80%',
+  margin: 'auto'
+}
+
 class NavBar extends Component {
 
   render() {
     return (
-      <Navbar inverse staticTop fluid>
+      <Navbar staticTop >
         <Navbar.Header>
           <Navbar.Brand>
             <Link style={{color: 'DarkCyan'}} to="/client/dist/">
@@ -35,6 +41,9 @@ class NavBar extends Component {
             <LinkContainer to="/client/dist/about">
               <NavItem eventKey={2} href="about">About</NavItem>
             </LinkContainer>
+          </Nav>
+          <Nav pullRight>
+            <NavItem eventKey={1} href="https://github.com/JaredJacobsen/capstone_project">Github</NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

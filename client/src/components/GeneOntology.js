@@ -4,6 +4,12 @@ import GOForm from './GOForm'
 import ProteinsForm from './ProteinsForm'
 import Predictions from './Predictions'
 
+const h1Style = {
+  width: '50%',
+  margin: 'auto',
+  textAlign: 'center'
+}
+
 class GeneOntology extends Component {
 
   constructor(props) {
@@ -55,6 +61,7 @@ class GeneOntology extends Component {
     if (!this.state.modelBuilt) {
       return (
         <div>
+          <h1 style={h1Style}>Gene Ontology Prediction</h1>
           {this.state.ModelBuildError ? <h2>There was an error building the model. Please enter another GO id</h2> : undefined}
           <GOForm onSubmitGONum={this.onSubmitGONum.bind(this)} />
         </div>
@@ -62,6 +69,7 @@ class GeneOntology extends Component {
     }
     return (
       <div>
+        <h1 style={h1Style}>Gene Ontology Prediction</h1>
         {!this.state.predictions
           ? <ProteinsForm onSubmitANums={this.onSubmitANums.bind(this)} />
           : <Predictions predictions={this.state.predictions}

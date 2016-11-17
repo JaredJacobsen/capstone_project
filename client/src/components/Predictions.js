@@ -1,12 +1,19 @@
 import React, { Component } from 'react'
 import { Table, Button } from 'react-bootstrap'
 
+const style = {
+  width: '65%',
+  marginLeft: 'auto',
+  marginRight: 'auto',
+  marginTop: '20px'
+}
+
 class Predictions extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Predictions</h1>
+      <div style={style}>
+        <h3>Predictions</h3>
         <Table striped bordered condensed hover>
           <thead>
             <tr>

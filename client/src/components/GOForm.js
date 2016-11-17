@@ -2,6 +2,13 @@ import React, { Component } from 'react'
 import { FormGroup, ControlLabel, FormControl, FieldGroup, Button} from 'react-bootstrap'
 import axios from 'axios'
 
+const style = {
+  marginTop: '50px',
+  width: '65%',
+  marginRight: 'auto',
+  marginLeft: 'auto'
+}
+
 class GOForm extends Component {
 
   constructor(props) {
@@ -17,7 +24,7 @@ class GOForm extends Component {
 
   render() {
     return (
-      <form onSubmit={(e) => {e.preventDefault()}}>
+      <form onSubmit={(e) => {e.preventDefault()}} style={style}>
         <FormGroup controlId="formControlsTextarea">
           <ControlLabel>Input Gene Ontology ID</ControlLabel>
           <FormControl type="text" placeholder="e.g., 0004738" onChange={this.onChange.bind(this)}/>

@@ -3,8 +3,13 @@ import axios from 'axios'
 import ProteinsForm from './ProteinsForm'
 import Predictions from './Predictions'
 
-// should by modified to allow input of true class labels, to calculate accuracy
+const h1Style = {
+  width: '50%',
+  margin: 'auto',
+  textAlign: 'center'
+}
 
+// should by modified to allow input of true class labels, to calculate accuracy
 class AllergenDemo extends Component {
 
   constructor(props) {
@@ -36,7 +41,7 @@ class AllergenDemo extends Component {
     console.log('render')
     return (
       <div>
-        <h1>Allergenicity Prediction</h1>
+        <h1 style={h1Style}>Allergen Prediction</h1>
         {!this.state.predictions
           ? <ProteinsForm onSubmitANums={this.onSubmitANums.bind(this)} />
           : <Predictions predictions={this.state.predictions}
