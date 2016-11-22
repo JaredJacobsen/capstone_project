@@ -77,16 +77,15 @@ def add_protein_characteristics(df):
     aa_dict = {}
     for aa in aa_list:
         aa_dict[aa] = []
-    prop_dict = {'aromaticity': [], 'instability_index': [], 'helix': [], 'turn': [], 'sheet': [],
-                'isoelectric_point': [], 'gravy': [], 'flexibility': []}
+    prop_dict = {'aromaticity': [], 'helix': [], 'turn': [], 'sheet': [], 'isoelectric_point': [], 'gravy': []} #, 'flexibility': [], 'instability_index': []}
     for i, s in enumerate(df['sequence']):
         s = s.replace('B', 'D').replace('Z', 'E').replace('J', 'L').replace('X', 'G').replace('U', 'C').replace('O', 'K')
         pa = ProteinAnalysis(s)
         prop_dict['aromaticity'].append(pa.aromaticity())
-        prop_dict['instability_index'].append(pa.instability_index())
         prop_dict['isoelectric_point'].append(pa.isoelectric_point())
         prop_dict['gravy'].append(pa.gravy())
-        prop_dict['flexibility'].append(np.mean(pa.flexibility()))
+        # prop_dict['instability_index'].append(pa.instability_index())
+        # prop_dict['flexibility'].append(np.mean(pa.flexibility()))
         for fraction, ss in zip(pa.secondary_structure_fraction(), ['helix', 'turn', 'sheet']):
             prop_dict[ss].append(fraction)
         for k, v in pa.get_amino_acids_percent().items():

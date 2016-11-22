@@ -81,5 +81,6 @@ def filter_df_by_sim_among_positives(df, thresh, target_var_name='allergen'):
     pos_df = df[df[target_var_name] == 1].reset_index(drop=True)
     neg_df = df[df[target_var_name] == 0].reset_index(drop=True)
     sequences = pos_df['sequence']
-    unique_ids = get_unique_sequences(sequences, thresh)
-    return df[sequences]
+    unique_ids = get_unique_sequences(sequences, thresh)[0]
+    pos_df = pos_df.ix[unique_ids]
+    return pos_df.append(neg_df, ignore_index=True)
