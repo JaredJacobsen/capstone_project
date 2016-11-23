@@ -1,25 +1,29 @@
 import pandas as pd
 import numpy as np
-from utils import get_sequences_from_fasta, create_balanced_df, add_protein_characteristics
-from sklearn.ensemble import RandomForestClassifier
+from utils import add_protein_characteristics
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.model_selection import cross_val_score
 import cPickle as pickle
+import sys
 
 def build_model():
-    allergen_sequences = get_sequences_from_fasta(open('data/uniprot_allergens.fasta'))
-    non_allergen_sequences = get_sequences_from_fasta(open('data/uniprot_sprot.fasta'))
+    with open('pickles/full_ABT_df.pkl', 'r') as fin:
+        df = pickle.load(fin)
 
-    df = create_balanced_df(allergen_sequences, non_allergen_sequences, 'allergen')
-    df = add_protein_characteristics(df)
+    gb = GradientBoostingClassifier(n_estimators=100, learning_rate=0.1, max_depth=5, min_samples_leaf=17)
 
     X = df.drop(['sequence','allergen'], axis=1)
-    y = df['allergen']
-    rf = RandomForestClassifier()
-    print 'cross validation score: ' + str(np.mean(cross_val_score(rf, X, y, cv=5))) + '\n'
-    rf.fit(X, y)
+    y = df['allergen'].copy()
+
+    gb.fit(X, y)
+
     with open('pickles/allergen_model.pkl', 'w') as fout:
-        pickle.dump(rf, fout)
-    return rf
+        pickle.dump(gb, fout)
+
+    #should modify to accept options
+    if len(sys.argv) == 2 and sys.argv[1] == 'cv':
+        print 'cross validation scores: ' + str(cross_val_score(rf, X, y, cv=5, scoring='f1')) + '\n'
+    return gb
 
 if __name__ == '__main__':
     build_model()

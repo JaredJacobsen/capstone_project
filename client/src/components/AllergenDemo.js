@@ -41,7 +41,6 @@ class AllergenDemo extends Component {
     console.log('render')
     return (
       <div>
-        <h1 style={h1Style}>Allergen Prediction</h1>
         {!this.state.predictions
           ? <ProteinsForm onSubmitANums={this.onSubmitANums.bind(this)} />
           : <Predictions predictions={this.state.predictions}

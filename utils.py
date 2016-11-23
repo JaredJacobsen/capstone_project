@@ -102,7 +102,8 @@ def convert_acc_nums_to_df(a_nums_str):
     return df
 
 def protein_input_to_pred_df(text, model):
-    if len(text.split()[0]) > 7:
+    entries = text.split()
+    if len(entries[0]) > 7:
         df = pd.DataFrame(data=entries, columns=['sequence'])
         X = add_protein_characteristics(df)
     else:

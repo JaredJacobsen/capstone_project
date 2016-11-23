@@ -9,7 +9,6 @@ const style = {
 }
 
 class Predictions extends Component {
-
   render() {
     return (
       <div style={style}>
@@ -17,19 +16,21 @@ class Predictions extends Component {
         <Table striped bordered condensed hover>
           <thead>
             <tr>
-              <th>Accession #</th>
-              <th>Protein Name</th>
-              <th>Organism Name</th>
-              <th>{this.props.targetVariableName}</th>
+              {this.props.predictions[0].acc_num ? <th>Accession #</th> : undefined}
+              {this.props.predictions[0].protein_name ? <th>Protein Name</th> : undefined}
+              {this.props.predictions[0].organism_name ? <th>Organism Name</th> : undefined}
+              <th>Sequence</th>
+              <th>Prediction</th>
             </tr>
           </thead>
           <tbody>
             {Object.values(this.props.predictions).map((p, index) => {
               return (
                 <tr key={index}>
-                  <td>{p.acc_num}</td>
-                  <td>{p.protein_name}</td>
-                  <td>{p.organism_name}</td>
+                  {p.acc_num ? <td>{p.acc_num}</td> : undefined}
+                  {p.protein_name ? <td>{p.protein_name}</td> : undefined}
+                  {p.organism_name ? <td>{p.organism_name}</td> : undefined}
+                  <td>{p.sequence}</td>
                   <td>{p.prediction}</td>
                 </tr>
               )

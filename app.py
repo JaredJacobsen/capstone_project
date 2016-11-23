@@ -7,11 +7,6 @@ import json
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/predict', methods=['POST'])
-def predict():
-    print request.data
-    return json.dumps({'predictions': 1})
-
 @app.route('/predict-allergens', methods=['POST'])
 def predict_allergens():
     data = json.loads(request.data)

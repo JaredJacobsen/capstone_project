@@ -26,8 +26,8 @@ class ProteinsForm extends Component {
     return (
       <form onSubmit={(e) => {e.preventDefault()}} style={style}>
         <FormGroup controlId="formControlsTextarea">
-          <ControlLabel style={{marginBottom: '20px'}}>Input protein accession numbers</ControlLabel>
-          <FormControl componentClass="textarea" placeholder="e.g., P31946 P62258 ..." onChange={this.onChange.bind(this)}/>
+          <ControlLabel style={{marginBottom: '20px'}}>Input protein sequences or accession numbers</ControlLabel>
+          <FormControl componentClass="textarea" placeholder="e.g., P31946 ... P62258   OR   MQDRLSTYR..., MDRYQWRD..." onChange={this.onChange.bind(this)}/>
         </FormGroup>
         <Button type="button" onClick={() => {this.props.onSubmitANums(this.state.text_input)}}>Predict</Button>
       </form>
