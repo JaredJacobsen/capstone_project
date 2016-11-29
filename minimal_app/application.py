@@ -4,8 +4,7 @@ import cPickle as pickle
 import json
 import pandas as pd
 from Bio.SeqUtils.ProtParam import ProteinAnalysis
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.pipeline import Pipeline
+from sklearn.ensemble import GradientBoostingClassifier
 
 def add_protein_characteristics(df):
     df = df.copy()
