@@ -17,7 +17,7 @@ class NavBar extends Component {
         <Navbar.Header>
           <Navbar.Brand>
             <Link style={{color: '#52a4f2', fontWeight: 'bold'}} to="/client/dist/">
-              Allergen Classifier
+              Protigen
             </Link>
           </Navbar.Brand>
           <Navbar.Toggle />

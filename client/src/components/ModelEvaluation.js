@@ -5,7 +5,7 @@ class ModelEvaluation extends Component {
   render() {
     return (
       <div>
-        <h1>stuff about the model</h1>
+        <h1>Coming Soon</h1>
       </div>
     )
   }
