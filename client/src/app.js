@@ -10,7 +10,7 @@ import ModelEvaluation from './components/ModelEvaluation'
 
 ReactDOM.render((
   <Router history={browserHistory}>
-    <Route path="http://54.214.109.92/" component={Root}>
+    <Route path="/" component={Root}>
       <IndexRoute component={Index}/>
       <Route path="allergen" component={AllergenDemo} />
       <Route path="model-evaluation" component={ModelEvaluation} />
