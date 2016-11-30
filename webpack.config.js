@@ -1,11 +1,9 @@
-import path from 'path'
-
 module.exports = {
   entry: './client/src/app.js',
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: "build.js",
-    publicPath: '/client/dist/'
+    path: __dirname,
+    filename: "./client/dist/build.js",
+    publicPath: "/"
   },
   module: {
     loaders: [

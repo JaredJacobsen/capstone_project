@@ -16,7 +16,7 @@ class NavBar extends Component {
       <Navbar staticTop >
         <Navbar.Header>
           <Navbar.Brand>
-            <Link style={{color: '#52a4f2', fontWeight: 'bold'}} to="/client/dist/">
+            <Link style={{color: '#52a4f2', fontWeight: 'bold'}} to="/">
               Protigen
             </Link>
           </Navbar.Brand>
@@ -24,13 +24,13 @@ class NavBar extends Component {
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav>
-            <LinkContainer to="/client/dist/allergen">
+            <LinkContainer to="/allergen">
               <NavItem eventKey={1}>Make Predictions</NavItem>
             </LinkContainer>
-            <LinkContainer to="client/dist/model-evaluation">
+            <LinkContainer to="/model-evaluation">
               <NavItem eventKey={2}>Model Evaluation</NavItem>
             </LinkContainer>
-            <LinkContainer to="/client/dist/about">
+            <LinkContainer to="/about">
               <NavItem eventKey={3}>About</NavItem>
             </LinkContainer>
           </Nav>
