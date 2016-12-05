@@ -5,7 +5,8 @@ import { Jumbotron, Button } from 'react-bootstrap'
 const style = {
   marginTop: '50px',
   height: '700px',
-  backgroundImage: 'url(' + '../public/wheat.jpg' + ')',
+  backgroundImage: 'url(https://static.pexels.com/photos/27715/pexels-photo.jpg)',
+  // backgroundImage: 'url(' + '../public/wheat.jpg' + ')',
   backgroundSize: 'cover'
 };
 
@@ -16,8 +17,8 @@ class Index extends Component {
       <div>
         <Jumbotron style={style}>
           <h1 style={{color: 'White'}}>A Protein Allergen Classifier</h1>
-          <p style={{color: 'LightGray'}}>Predicting allergenic proteins using machine learning</p>
-          <p><Link to='client/dist/allergen'><Button bsStyle="primary" >Make Predictions</Button></Link></p>
+          <p style={{color: 'LightGray'}}>Applying machine learning to predict allergens</p>
+          <p><Link to='/allergen'><Button bsStyle="primary" >Make Predictions</Button></Link></p>
         </Jumbotron>
       </div>
     )

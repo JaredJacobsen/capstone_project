@@ -2,16 +2,7 @@ import React, { Component } from 'react'
 import { Table, Button } from 'react-bootstrap'
 import ReactBootstrapSlider from 'react-bootstrap-slider'
 
-
-var nearest = function (arr, val) {
-    var s = arr.concat(val).sort();
-    var i = s.indexOf(val);
-    return arr.indexOf(s[i-1])
-
-    return { "low": arr.indexOf(s[i-1]), "high": arr.indexOf(s[i+1]) };
-};
-
-const style = {
+const divStyle = {
   width: '65%',
   marginLeft: 'auto',
   marginRight: 'auto',
@@ -42,7 +33,7 @@ class Predictions extends Component {
     let threshold = this.state.thresholds[i]
     let precision = this.state.precision[i]
     return (
-      <div style={style}>
+      <div style={divStyle}>
         <h2>Predictions</h2>
         <hr/>
         <h4>Predicted Recall: {this.state.currentValue && this.state.currentValue.toPrecision(2)}</h4>

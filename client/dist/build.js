@@ -45627,7 +45627,7 @@
 	  textAlign: 'center'
 	};
 
-	// should by modified to allow input of true class labels, to calculate accuracy
+	// should by modified to allow input of true class labels, to calculate accuraccy
 
 	var AllergenDemo = function (_Component) {
 	  _inherits(AllergenDemo, _Component);
@@ -45654,7 +45654,7 @@
 	      var _this2 = this;
 
 	      if (this.text_input != '') {
-	        _axios2.default.post('http://127.0.0.1:5000/predict-allergens', {
+	        _axios2.default.post('http://www.jaredjacobsen.space/api/predict-allergens', {
 	          text_input: text_input
 	        }).then(function (response) {
 	          _this2.setState({ predictions: response.data });
@@ -47234,10 +47234,10 @@
 	          { controlId: 'formControlsTextarea' },
 	          _react2.default.createElement(
 	            _reactBootstrap.ControlLabel,
-	            { style: { marginBottom: '20px' } },
+	            { style: { marginBottom: '20px', fontSize: '30' } },
 	            'Input protein sequences'
 	          ),
-	          _react2.default.createElement(_reactBootstrap.FormControl, { componentClass: 'textarea', placeholder: 'e.g., MQDRLSTYR..., MDRYQWRD...', onChange: this.onChange.bind(this) })
+	          _react2.default.createElement(_reactBootstrap.FormControl, { componentClass: 'textarea', placeholder: 'e.g., MQDRLSTYR...  MDRYQWRD...', onChange: this.onChange.bind(this) })
 	        ),
 	        _react2.default.createElement(
 	          _reactBootstrap.Button,
@@ -63678,43 +63678,23 @@
 	var About = function (_Component) {
 	  _inherits(About, _Component);
 
-	  function About(props) {
+	  function About() {
 	    _classCallCheck(this, About);
 
-	    var _this = _possibleConstructorReturn(this, (About.__proto__ || Object.getPrototypeOf(About)).call(this, props));
-
-	    _this.state = {
-	      currentValue: 0
-	    };
-	    return _this;
+	    return _possibleConstructorReturn(this, (About.__proto__ || Object.getPrototypeOf(About)).apply(this, arguments));
 	  }
 
 	  _createClass(About, [{
-	    key: 'changeValue',
-	    value: function changeValue(e) {
-	      console.log("value changed", this.state.currentValue);
-	      this.setState({ currentValue: e.target.value });
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { style: { marginLeft: '100px' } },
+	        null,
 	        _react2.default.createElement(
 	          'h1',
 	          null,
 	          'Coming Soon'
-	        ),
-	        _react2.default.createElement(_reactBootstrapSlider2.default, {
-	          value: this.state.currentValue,
-	          change: this.changeValue.bind(this),
-	          step: 0.005,
-	          max: 1,
-	          min: 0,
-	          orientation: 'horizontal',
-	          reverse: true
-	        })
+	        )
 	      );
 	    }
 	  }]);
@@ -63755,7 +63735,8 @@
 	var style = {
 	  marginTop: '50px',
 	  height: '700px',
-	  backgroundImage: 'url(' + '../public/wheat.jpg' + ')',
+	  backgroundImage: 'url(https://static.pexels.com/photos/27715/pexels-photo.jpg)',
+	  // backgroundImage: 'url(' + '../public/wheat.jpg' + ')',
 	  backgroundSize: 'cover'
 	};
 
@@ -63785,14 +63766,14 @@
 	          _react2.default.createElement(
 	            'p',
 	            { style: { color: 'LightGray' } },
-	            'Predicting allergenic proteins using machine learning'
+	            'Applying machine learning to predict allergens'
 	          ),
 	          _react2.default.createElement(
 	            'p',
 	            null,
 	            _react2.default.createElement(
 	              _reactRouter.Link,
-	              { to: 'client/dist/allergen' },
+	              { to: '/allergen' },
 	              _react2.default.createElement(
 	                _reactBootstrap.Button,
 	                { bsStyle: 'primary' },
