@@ -1,4 +1,5 @@
 Author: Jared Jacobsen
+
 Project Title: Protigen
 
 Protigen is a web server that predicts protein allergenicity based on amino acid sequence. It was developed as a capstone project for the Galvanize Data Science Immersive program. The server can be found at www.jaredjacobsen.space.
