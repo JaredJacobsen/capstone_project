@@ -9,7 +9,6 @@ const h1Style = {
   textAlign: 'center'
 }
 
-// should by modified to allow input of true class labels, to calculate accuracy
 class AllergenDemo extends Component {
 
   constructor(props) {
@@ -23,10 +22,10 @@ class AllergenDemo extends Component {
     this.setState({predictions: false})
   }
 
-  onSubmitANums(text_input) {
+  onSubmitANums(textInput) {
     if (this.text_input != '') {
-      axios.post('http://127.0.0.1:5000/predict-allergens', {
-        text_input: text_input
+      axios.post('http://www.jaredjacobsen.space/api/predict-allergens', {
+        textInput: textInput
       })
       .then((response) => {
         this.setState({predictions: response.data})
@@ -38,10 +37,8 @@ class AllergenDemo extends Component {
   }
 
   render() {
-    console.log('render')
     return (
       <div>
-        <h1 style={h1Style}>Allergen Prediction</h1>
         {!this.state.predictions
           ? <ProteinsForm onSubmitANums={this.onSubmitANums.bind(this)} />
           : <Predictions predictions={this.state.predictions}
@@ -52,6 +49,7 @@ class AllergenDemo extends Component {
   }
 
 }
+
 
 
 export default AllergenDemo

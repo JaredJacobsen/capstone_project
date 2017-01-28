@@ -2,7 +2,8 @@ module.exports = {
   entry: './client/src/app.js',
   output: {
     path: __dirname,
-    filename: "./client/dist/build.js"
+    filename: "./client/dist/build.js",
+    publicPath: "/"
   },
   module: {
     loaders: [
